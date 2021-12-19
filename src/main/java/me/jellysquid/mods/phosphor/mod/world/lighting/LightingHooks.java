@@ -326,7 +326,7 @@ public class LightingHooks {
                                 IBlockState state = storage.data.palette.getBlockState(key);
 
                                 if (state != null) {
-                                    int light = state.getLightValue(world, pos);
+                                    int light = LightingEngineHelpers.getLightValueForState(state, world, pos);
 
                                     if (light > 0) {
                                         pos.setPos(xBase + x, yBase + y, zBase + z);

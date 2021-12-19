@@ -1,5 +1,6 @@
 package me.jellysquid.mods.phosphor.mod.world.lighting;
 
+import atomicstryker.dynamiclights.client.DynamicLights;
 import me.jellysquid.mods.phosphor.api.IChunkLighting;
 import me.jellysquid.mods.phosphor.api.ILightingEngine;
 import me.jellysquid.mods.phosphor.mixins.plugins.LightingEnginePlugin;
@@ -17,6 +18,7 @@ import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -91,6 +93,7 @@ public class LightingEngine implements ILightingEngine {
     private Chunk curChunk;
     private long curChunkIdentifier;
     private long curData;
+    static boolean isDynamicLightsLoaded;
 
     //Cached data about neighboring blocks (of tempPos)
     private boolean isNeighborDataValid = false;
@@ -103,6 +106,7 @@ public class LightingEngine implements ILightingEngine {
     public LightingEngine(final World world) {
         this.world = world;
         this.profiler = world.profiler;
+        isDynamicLightsLoaded = Loader.isModLoaded("dynamiclights");
 
         PooledLongQueue.Pool pool = new PooledLongQueue.Pool();
 
@@ -588,7 +592,7 @@ public class LightingEngine implements ILightingEngine {
             }
         }
 
-        return MathHelper.clamp(state.getLightValue(this.world, this.curPos), 0, MAX_LIGHT);
+        return MathHelper.clamp(LightingEngineHelpers.getLightValueForState(state, this.world, this.curPos), 0, MAX_LIGHT);
     }
 
     private int getPosOpacity(final BlockPos pos, final IBlockState state) {

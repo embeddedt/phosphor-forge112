@@ -44,6 +44,9 @@ minecraft {
 
 repositories {
     maven { url = 'https://repo.spongepowered.org/maven' }
+    maven {
+        url "https://www.cursemaven.com"
+    }
 }
 
 configurations {
@@ -52,6 +55,7 @@ configurations {
 }
 
 dependencies {
+    deobfCompile "curse.maven:dynamiclights-227874:2563244"
     shade('org.spongepowered:mixin:0.8') {
         transitive = false
     }
