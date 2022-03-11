@@ -7,5 +7,5 @@ final class PhosphorConstants {
 
     static final String MOD_VERSION = "1.12.2-0.2.7";
 
-    static final String MOD_DEPENDENCIES = "after:neid@[1.5.4.4,);after:spongeforge@[1.12.2-2838-7.1.7-RC3844,)";
+    static final String MOD_DEPENDENCIES = "after:neid@[1.5.4.4,);after:spongeforge@[1.12.2-2838-7.1.7-RC3844,);required-after:mixinbooter@[4.1,)";
 }

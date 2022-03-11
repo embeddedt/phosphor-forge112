@@ -47,6 +47,7 @@ repositories {
     maven {
         url "https://www.cursemaven.com"
     }
+    mavenLocal()
 }
 
 configurations {
@@ -56,17 +57,13 @@ configurations {
 
 dependencies {
     deobfCompile "curse.maven:dynamiclights-227874:2563244"
-    shade('org.spongepowered:mixin:0.8') {
-        transitive = false
-    }
+    deobfCompile ("zone.rong:mixinbooter:4.2")
 }
 
 def coreModManifest = {
     attributes "FMLAT": "phosphor_at.cfg"
     attributes "Maven-Artifact": "${group}:${name}:${version}"
     attributes "FMLCorePlugin": "me.jellysquid.mods.phosphor.core.PhosphorFMLLoadingPlugin"
-    attributes "TweakClass": "org.spongepowered.asm.launch.MixinTweaker"
-    attributes "TweakOrder": 0
     attributes "FMLCorePluginContainsFMLMod": true
     attributes "ForceLoadAsMod": true
 }
@@ -77,19 +74,6 @@ jar {
     manifest coreModManifest
 
     from sourceSets.main.output
-
-    configurations.shade.each { dep ->
-        from(project.zipTree(dep)) {
-            rename 'LICENSE.txt', 'org/spongepowered/LICENSE.txt'
-
-            exclude 'META-INF/*.SF'
-            exclude 'META-INF/*.RSA'
-            exclude 'META-INF/*.MF'
-
-            exclude '**/*.html'
-        }
-    }
-
 
     rename '(.+_at.cfg)', 'META-INF/$1'
 }
